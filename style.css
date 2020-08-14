@@ -60,6 +60,7 @@ body {
     padding: 5px 10px;
     color: black;
     outline: none;
+    font-size: 20px;
 }
 
 .btn:hover {
