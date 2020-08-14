@@ -1,16 +1,19 @@
-const timerEl = document.getElementById('timer')
+const timerEl = document.getElementById('timer');
+const timerCl = document.querySelector('.timer')
 const startBtn = document.getElementById('start-btn');
-const questionContainerEl = document.getElementById('question-container')
+const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
 const answerBtnEl = document.getElementById('answer-buttons');
-const answerBtn1 = document.getElementById('Answer1')
-const answerBtn2 = document.getElementById('Answer2')
-const answerBtn3 = document.getElementById('Answer3')
-const answerBtn4 = document.getElementById('Answer4')
+const answerBtn1 = document.getElementById('Answer1');
+const answerBtn2 = document.getElementById('Answer2');
+const answerBtn3 = document.getElementById('Answer3');
+const answerBtn4 = document.getElementById('Answer4');
 
 // timer
-let timerCount = 75;
+let timerCount = 1;
 let timerId = '';
+const h2El = document.createElement('h2')
+
 
 function countDown() {
     timerEl.innerText = timerCount
@@ -18,6 +21,11 @@ function countDown() {
         timerCount--
     } else {
         console.log('time is up')
+        clearInterval(timerId)
+        questionContainerEl.classList.add('hide')
+        h2El.textContent = 'Time is up!';
+        timerCl.appendChild(h2El);
+        timerCl.setAttribute('style', 'font-size:40px', 'align-items:center')
     }
 }
 countDown()
