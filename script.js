@@ -9,6 +9,8 @@ const answerBtn2 = document.getElementById('Answer2');
 const answerBtn3 = document.getElementById('Answer3');
 const answerBtn4 = document.getElementById('Answer4');
 const rightWrong = document.getElementById('right-or-wrong')
+const scoreEl = document.getElementById('score')
+const highScores = document.getElementById('high-scores')
 
 // timer
 let timerCount = 75;
@@ -22,11 +24,11 @@ function countDown() {
         timerCount--
     } else {
         console.log('time is up')
-        clearInterval(timerId)
-        questionContainerEl.classList.add('hide')
-        h2El.textContent = 'Time is up!';
-        timerCl.appendChild(h2El);
-        timerCl.setAttribute('style', 'font-size:40px', 'align-items:center')
+        // clearInterval(timerId)
+        // questionContainerEl.classList.add('hide')
+        // h2El.textContent = 'Time is up!';
+        // timerCl.appendChild(h2El);
+        // timerCl.setAttribute('style', 'font-size:40px', 'align-items:center')
     }
 }
 countDown()
@@ -44,11 +46,11 @@ function startGame() {
     timerId = setInterval(countDown, 1000)
 }
 
-// Questionss
+// Questions
 let curQuestionIndex = 0
 
 function displayQuestion() {
-    rightWrong.innerText = ''
+
     questionEl.innerText = questions[curQuestionIndex].question
     answerBtn1.innerText = questions[curQuestionIndex].answers[0].text
     answerBtn2.innerText = questions[curQuestionIndex].answers[1].text
@@ -58,6 +60,7 @@ function displayQuestion() {
     answerBtn2.setAttribute('data-correct', questions[curQuestionIndex].answers[1].correct)
     answerBtn3.setAttribute('data-correct', questions[curQuestionIndex].answers[2].correct)
     answerBtn4.setAttribute('data-correct', questions[curQuestionIndex].answers[3].correct)
+    // rightWrong.innerText = ''
 }
 
 // select answer
@@ -72,21 +75,25 @@ answerBtn4.addEventListener('click', clickAnswer)
 
 function clickAnswer() {
     let selection = this.getAttribute('data-correct')
-    console.log('begin', timerCount)
+    console.log('begin', timerCount, timerId)
     console.log(selection)
     if (selection == 'true') {
         answerCorrect++
         console.log('correct')
-        rightWrong.innerText = 'You got it right!'
+        // rightWrong.innerText = 'You got it right!'
+        alert('You got it right!')
     } else {
         answerWrong++
         timerCount -= 10
-        console.log('wrong', timerCount)
-        rightWrong.innerText = 'OOPS, you missed this one.'
+        console.log('wrong', timerCount, timerId)
+        // rightWrong.innerText = 'OOPS, you missed this one.'
+        alert('OOPS, you missed this one.')
     }
     if (curQuestionIndex < questions.length - 1) {
         curQuestionIndex++
-        // How do I set a delay????
+        // How do I set a delay so the result of the answer selection displays????
+        // setTimeout(displayQuestion(), 5000)
+
         displayQuestion()
     }
     else {
@@ -94,6 +101,14 @@ function clickAnswer() {
     }
 }
 
+function endGame() {
+    clearInterval(timerId)
+    console.log('timer id', timerId)
+    console.log('timer count', timerCount, typeof (timerCount))
+    questionContainerEl.classList.add('hide')
+    scoreEl.classList.remove('hide')
+    highScores.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " Score: " + (timerCount * answerCorrect)
+}
 
 const questions = [
     {
