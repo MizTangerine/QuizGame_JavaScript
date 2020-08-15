@@ -8,9 +8,10 @@ const answerBtn1 = document.getElementById('Answer1');
 const answerBtn2 = document.getElementById('Answer2');
 const answerBtn3 = document.getElementById('Answer3');
 const answerBtn4 = document.getElementById('Answer4');
+const rightWrong = document.getElementById('right-or-wrong')
 
 // timer
-let timerCount = 1;
+let timerCount = 75;
 let timerId = '';
 const h2El = document.createElement('h2')
 
@@ -31,19 +32,23 @@ function countDown() {
 countDown()
 
 // start button is clicked
+startBtn.addEventListener('click', startGame)
+
 function startGame() {
     console.log('started')
     startBtn.classList.add('hide')
     questionContainerEl.classList.remove('hide')
+
     displayQuestion()
+    console.log('question index', curQuestionIndex)
     timerId = setInterval(countDown, 1000)
 }
-startBtn.addEventListener('click', startGame)
 
 // Questionss
 let curQuestionIndex = 0
 
 function displayQuestion() {
+    rightWrong.innerText = ''
     questionEl.innerText = questions[curQuestionIndex].question
     answerBtn1.innerText = questions[curQuestionIndex].answers[0].text
     answerBtn2.innerText = questions[curQuestionIndex].answers[1].text
@@ -54,6 +59,41 @@ function displayQuestion() {
     answerBtn3.setAttribute('data-correct', questions[curQuestionIndex].answers[2].correct)
     answerBtn4.setAttribute('data-correct', questions[curQuestionIndex].answers[3].correct)
 }
+
+// select answer
+
+let answerCorrect = 0
+let answerWrong = 0
+
+answerBtn1.addEventListener('click', clickAnswer)
+answerBtn2.addEventListener('click', clickAnswer)
+answerBtn3.addEventListener('click', clickAnswer)
+answerBtn4.addEventListener('click', clickAnswer)
+
+function clickAnswer() {
+    let selection = this.getAttribute('data-correct')
+    console.log('begin', timerCount)
+    console.log(selection)
+    if (selection == 'true') {
+        answerCorrect++
+        console.log('correct')
+        rightWrong.innerText = 'You got it right!'
+    } else {
+        answerWrong++
+        timerCount -= 10
+        console.log('wrong', timerCount)
+        rightWrong.innerText = 'OOPS, you missed this one.'
+    }
+    if (curQuestionIndex < questions.length - 1) {
+        curQuestionIndex++
+        // How do I set a delay????
+        displayQuestion()
+    }
+    else {
+        endGame()
+    }
+}
+
 
 const questions = [
     {
