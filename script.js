@@ -1,5 +1,5 @@
 const timerEl = document.getElementById('timer');
-const timerCl = document.querySelector('.timer')
+const timerCl = document.querySelector('.timer');
 const startBtn = document.getElementById('start-btn');
 const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
@@ -8,27 +8,31 @@ const answerBtn1 = document.getElementById('Answer1');
 const answerBtn2 = document.getElementById('Answer2');
 const answerBtn3 = document.getElementById('Answer3');
 const answerBtn4 = document.getElementById('Answer4');
-const rightWrong = document.getElementById('right-or-wrong')
-const scoreEl = document.getElementById('score')
-const highScores = document.getElementById('high-scores')
+const rightWrong = document.getElementById('right-or-wrong');
+const scoreEl = document.getElementById('score');
+const results = document.getElementById('results');
+const submitEl = document.getElementById('submit');
+const initialsEl = document.getElementById('initials');
 
 // timer
-let timerCount = 75;
+let timerCount = 50;
 let timerId = '';
-const h2El = document.createElement('h2')
+// const h2El = document.createElement('h2');
 
 
 function countDown() {
-    timerEl.innerText = timerCount
+    timerEl.innerText = timerCount;
     if (timerCount > 0) {
-        timerCount--
+        timerCount--;
     } else {
-        console.log('time is up')
-        // clearInterval(timerId)
-        // questionContainerEl.classList.add('hide')
-        // h2El.textContent = 'Time is up!';
-        // timerCl.appendChild(h2El);
-        // timerCl.setAttribute('style', 'font-size:40px', 'align-items:center')
+        console.log('time is up');
+        clearInterval(timerId);
+        questionContainerEl.classList.add('hide');
+        timerCl.textContent = 'Time is up! Quiz will reload!';
+        timerCl.setAttribute('style', 'color: red')
+        setTimeout(function () {
+            location.reload()
+        }, 2000)
     }
 }
 countDown()
@@ -38,6 +42,7 @@ startBtn.addEventListener('click', startGame)
 
 function startGame() {
     console.log('started')
+    clearInterval(timerId);
     startBtn.classList.add('hide')
     questionContainerEl.classList.remove('hide')
 
@@ -103,11 +108,20 @@ function clickAnswer() {
 
 function endGame() {
     clearInterval(timerId)
+    timerEl.innerText = timerCount
     console.log('timer id', timerId)
     console.log('timer count', timerCount, typeof (timerCount))
     questionContainerEl.classList.add('hide')
     scoreEl.classList.remove('hide')
-    highScores.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " Score: " + (timerCount * answerCorrect)
+    let score = (timerCount * answerCorrect)
+    localStorage.setItem('score', score)
+    results.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " Score: " + score
+}
+
+function saveUser() {
+    let initials = initialsEl.value
+    console.log(initialsEl.value)
+    localStorage.setItem('initials', initials);
 }
 
 const questions = [
@@ -120,31 +134,31 @@ const questions = [
             { text: 'square brackets', correct: false }
         ]
     },
-    {
-        question: 'Arrays in JavaScript can be used to store ____.',
-        answers: [
-            { text: 'numbers and strings', correct: false },
-            { text: 'other arrays', correct: false },
-            { text: 'booleans', correct: false },
-            { text: 'all of the above', correct: true }
-        ]
-    },
-    {
-        question: 'Commonly used data types DO NOT include:',
-        answers: [
-            { text: 'strings', correct: false },
-            { text: 'booleans', correct: false },
-            { text: 'alerts', correct: true },
-            { text: 'numbers', correct: false }
-        ]
-    },
-    {
-        question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
-        answers: [
-            { text: 'JavaScript', correct: false },
-            { text: 'terminal/bash', correct: false },
-            { text: 'for loops', correct: false },
-            { text: 'console.log', correct: true }
-        ]
-    }
+    // {
+    //     question: 'Arrays in JavaScript can be used to store ____.',
+    //     answers: [
+    //         { text: 'numbers and strings', correct: false },
+    //         { text: 'other arrays', correct: false },
+    //         { text: 'booleans', correct: false },
+    //         { text: 'all of the above', correct: true }
+    //     ]
+    // },
+    // {
+    //     question: 'Commonly used data types DO NOT include:',
+    //     answers: [
+    //         { text: 'strings', correct: false },
+    //         { text: 'booleans', correct: false },
+    //         { text: 'alerts', correct: true },
+    //         { text: 'numbers', correct: false }
+    //     ]
+    // },
+    // {
+    //     question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
+    //     answers: [
+    //         { text: 'JavaScript', correct: false },
+    //         { text: 'terminal/bash', correct: false },
+    //         { text: 'for loops', correct: false },
+    //         { text: 'console.log', correct: true }
+    //     ]
+    // }
 ]
