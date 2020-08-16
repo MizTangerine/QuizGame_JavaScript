@@ -13,6 +13,8 @@ const scoreEl = document.getElementById('score');
 const results = document.getElementById('results');
 const submitEl = document.getElementById('submit');
 const initialsEl = document.getElementById('initials');
+const highScoreEl = document.getElementById('high-score')
+
 
 // timer
 let timerCount = 50;
@@ -96,8 +98,6 @@ function clickAnswer() {
     }
     if (curQuestionIndex < questions.length - 1) {
         curQuestionIndex++
-        // How do I set a delay so the result of the answer selection displays????
-        // setTimeout(displayQuestion(), 5000)
 
         displayQuestion()
     }
@@ -105,24 +105,54 @@ function clickAnswer() {
         endGame()
     }
 }
+// const scores = []
+// const user = []
 
 function endGame() {
     clearInterval(timerId)
     timerEl.innerText = timerCount
     console.log('timer id', timerId)
-    console.log('timer count', timerCount, typeof (timerCount))
+    console.log('timer count', timerCount)
     questionContainerEl.classList.add('hide')
     scoreEl.classList.remove('hide')
     let score = (timerCount * answerCorrect)
-    localStorage.setItem('score', score)
     results.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " Score: " + score
+
+    let highScore = parseInt(localStorage.getItem('highScore'));
+    console.log('high score', highScore);
+
+    highScoreEl.textContent = highScore || 0;
+
+    if (highScore && score > highScore) {
+        localStorage.setItem('highScore', score);
+    } else if (!highScore) localStorage.setItem('highScore', score);
+
+    // localStorage.setItem('score', score)
+    // scores.push(score);
+    // console.log(scores)
+    // localStorage.setItem('score', JSON.stringify(scores));
 }
 
-function saveUser() {
-    let initials = initialsEl.value
-    console.log(initialsEl.value)
-    localStorage.setItem('initials', initials);
-}
+// function saveUser() {
+//     let initials = initialsEl.value
+//     console.log(initialsEl.value)
+//     localStorage.setItem('initials', initials);
+// }
+
+// submitEl.addEventListener('click', saveUser)
+
+// saveUser()
+
+// function saveUser() {
+//     let initials = initialsEl.value
+//     user.push(initials);
+//     console.log(user)
+//     localStorage.setItem('initials', JSON.stringify(user))
+
+//     scores.push(score);
+//     console.log(scores)
+//     localStorage.setItem('score', JSON.stringify(scores))
+// }
 
 const questions = [
     {
@@ -134,15 +164,15 @@ const questions = [
             { text: 'square brackets', correct: false }
         ]
     },
-    // {
-    //     question: 'Arrays in JavaScript can be used to store ____.',
-    //     answers: [
-    //         { text: 'numbers and strings', correct: false },
-    //         { text: 'other arrays', correct: false },
-    //         { text: 'booleans', correct: false },
-    //         { text: 'all of the above', correct: true }
-    //     ]
-    // },
+    {
+        question: 'Arrays in JavaScript can be used to store ____.',
+        answers: [
+            { text: 'numbers and strings', correct: false },
+            { text: 'other arrays', correct: false },
+            { text: 'booleans', correct: false },
+            { text: 'all of the above', correct: true }
+        ]
+    },
     // {
     //     question: 'Commonly used data types DO NOT include:',
     //     answers: [
