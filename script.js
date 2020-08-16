@@ -13,7 +13,8 @@ const scoreEl = document.getElementById('score');
 const results = document.getElementById('results');
 const submitEl = document.getElementById('submit');
 const initialsEl = document.getElementById('initials');
-const highScoreEl = document.getElementById('high-score')
+const highScoreEl = document.getElementById('high-score');
+
 
 
 // timer
@@ -116,7 +117,7 @@ function endGame() {
     questionContainerEl.classList.add('hide')
     scoreEl.classList.remove('hide')
     let score = (timerCount * answerCorrect)
-    results.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " Score: " + score
+    results.innerText = "Right: " + answerCorrect + " / Wrong: " + answerWrong + " / Score: " + score
 
     let highScore = parseInt(localStorage.getItem('highScore'));
     console.log('high score', highScore);
@@ -173,22 +174,22 @@ const questions = [
             { text: 'all of the above', correct: true }
         ]
     },
-    // {
-    //     question: 'Commonly used data types DO NOT include:',
-    //     answers: [
-    //         { text: 'strings', correct: false },
-    //         { text: 'booleans', correct: false },
-    //         { text: 'alerts', correct: true },
-    //         { text: 'numbers', correct: false }
-    //     ]
-    // },
-    // {
-    //     question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
-    //     answers: [
-    //         { text: 'JavaScript', correct: false },
-    //         { text: 'terminal/bash', correct: false },
-    //         { text: 'for loops', correct: false },
-    //         { text: 'console.log', correct: true }
-    //     ]
-    // }
+    {
+        question: 'Commonly used data types DO NOT include:',
+        answers: [
+            { text: 'strings', correct: false },
+            { text: 'booleans', correct: false },
+            { text: 'alerts', correct: true },
+            { text: 'numbers', correct: false }
+        ]
+    },
+    {
+        question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
+        answers: [
+            { text: 'JavaScript', correct: false },
+            { text: 'terminal/bash', correct: false },
+            { text: 'for loops', correct: false },
+            { text: 'console.log', correct: true }
+        ]
+    }
 ]
