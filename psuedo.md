@@ -7,21 +7,18 @@ Starting Time: 75 sec
 Btn-Start Quiz
 
 When answer is selected,
-	if correct change to green
-	else change to red
-		and subtract 10 seconds from remaining time
+ 1.if correct display alert
+
+2.else display wrong alert
+
+- and subtract 10 seconds from remaining time
+
 Switch to next question
 
 When complete:
 stop timer
 Display remaining seconds as Score
-Add option to enter initials
-Submit Button to local storage
-
-High Scores
-Display initials and score from local storage
-Button to clear high scores
-Button to start over
+Display High Score
 
 QUESTIONS:
 Q-The condition in an if/else statement is enclosed within ____.
